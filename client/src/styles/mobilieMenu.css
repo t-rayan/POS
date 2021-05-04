@@ -1,0 +1,36 @@
+.mobile-menu {
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 250px;
+  z-index: 1111;
+}
+.mobile-menu .sidebar-top {
+  padding: 1rem 2rem;
+  /* border-bottom: 2px solid rgb(255, 255, 255); */
+}
+.mobile-menu ul {
+  padding: 1rem 2rem !important;
+  color: var(--text-color);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+ul li {
+  margin: 3rem 0;
+}
+ul li :hover{
+  color: var(--primary-color) !important;
+}
+.active {
+  color: var(--primary-color) !important;
+}
+.nav-icon {
+  margin-right: .5rem;
+  font-size: 1.6rem;
+}
+.nav-icon:hover{
+  color: var(--primary-color);
+}

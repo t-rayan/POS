@@ -1,23 +1,54 @@
-import "./App.css";
-import { Home, ProductPage, OrderPage, CategoryPage } from "./Pages";
-import { Header } from "./component";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import UiState from "./context/UiContext/UiState";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import ProductScreen from "./screens/ProductScreen";
+import OrderScreen from "./screens/OrderScreen";
+import CategoryScreen from "./screens/CategoryScreen";
+import CategoryDetailsScreen from "./screens/CategoryDetailsScreen";
+import ProductDetailsScreen from "./screens/ProductDetailsScreen";
+import OrderDetailsScreen from "./screens/OrderDetailsScreen";
+import AuthScreens from "./screens/AuthScreens";
+import PrivateRoute from "./PrivateRoute";
+import { loadUser } from "./actions/authActions";
+import { useHistory } from "react-router-dom";
+import ShopScreen from "./screens/ShopScreen";
+import DashboardScreen from "./screens/DashboardScreen";
 
-function App() {
+function App(props) {
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch, history]);
   return (
     <Router>
-      <UiState>
-        <div className="App">
-          <Header />
+      <div className="grid-container">
+        <header>
+          <Navbar />
+        </header>
+        <main>
           <Switch>
-            <Route path="/" exact component={Home} />
-            <Route path="/products" component={ProductPage} />
-            <Route path="/orders" component={OrderPage} />
-            <Route path="/category" component={CategoryPage} />
+            <Route path="/" exact component={AuthScreens} />
+            <PrivateRoute path="/shop" exact component={ShopScreen} />
+            {/* <Route path="/login" exact component={AuthScreens} /> */}
+            <PrivateRoute path="/categories" exact component={CategoryScreen} />
+            <PrivateRoute path="/products" exact component={ProductScreen} />
+            <PrivateRoute path="/orders" exact component={OrderScreen} />
+            <PrivateRoute path="/orders/:id" component={OrderDetailsScreen} />
+            <PrivateRoute
+              path="/categories/:id"
+              component={CategoryDetailsScreen}
+            />
+            <PrivateRoute
+              path="/products/:id"
+              component={ProductDetailsScreen}
+            />
+            <PrivateRoute path="/dashboard" exact component={DashboardScreen} />
           </Switch>
-        </div>
-      </UiState>
+        </main>
+      </div>
     </Router>
   );
 }
