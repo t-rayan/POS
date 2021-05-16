@@ -23,7 +23,7 @@ const AuthIndex = () => {
         <div className="auth-body">
           {toggleAuthForm ? <RegisterScreen /> : <LoginScreen />}
         </div>
-        <div className="auth-footer">
+        {/* <div className="auth-footer">
           {!toggleAuthForm ? (
             <p className="text-muted">
               {" "}
@@ -41,7 +41,7 @@ const AuthIndex = () => {
               </strong>
             </p>
           )}
-        </div>
+        </div> */}
       </div>
     </div>
   );

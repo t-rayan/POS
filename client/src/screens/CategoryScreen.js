@@ -85,7 +85,7 @@ const CategoryScreen = (props) => {
               >
                 {category.name}
               </p>
-              <div>
+              <div className="row align-center">
                 <FaTrash
                   className="trash-icon icon"
                   onClick={() => dispatch(deleteCategory(category._id))}

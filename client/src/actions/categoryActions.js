@@ -17,13 +17,14 @@ import {
   CATEGORY_LIST_SUCCESS,
   CATEGORY_ON_EDIT,
 } from "../constants/categoryConstants";
+import { tokenConfig } from "./authActions";
 
-export const listCategory = () => async (dispatch) => {
+export const listCategory = () => async (dispatch, getState) => {
   dispatch({
     type: CATEGORY_LIST_REQUEST,
   });
   try {
-    const { data } = await Axios.get("/api/categories");
+    const { data } = await Axios.get("/api/categories", tokenConfig(getState));
     dispatch({
       type: CATEGORY_LIST_SUCCESS,
       payload: data,
@@ -38,12 +39,15 @@ export const listCategory = () => async (dispatch) => {
   }
 };
 
-export const categoryDetails = (categoryId) => async (dispatch) => {
+export const categoryDetails = (categoryId) => async (dispatch, getState) => {
   dispatch({
     type: CATEGORY_DETAILS_REQUEST,
   });
   try {
-    const { data } = await Axios.get(`/api/categories/${categoryId}`);
+    const { data } = await Axios.get(
+      `/api/categories/${categoryId}`,
+      tokenConfig(getState)
+    );
     dispatch({
       type: CATEGORY_DETAILS_SUCCESS,
       payload: data,
@@ -58,13 +62,17 @@ export const categoryDetails = (categoryId) => async (dispatch) => {
   }
 };
 
-export const createCategory = (category) => async (dispatch) => {
+export const createCategory = (category) => async (dispatch, getState) => {
   dispatch({
     type: CATEGORY_CREATE_REQUEST,
     payload: category,
   });
   try {
-    const { data } = await Axios.post("/api/categories", category);
+    const { data } = await Axios.post(
+      "/api/categories",
+      category,
+      tokenConfig(getState)
+    );
     dispatch({
       type: CATEGORY_CREATE_SUCCESS,
       payload: data,
@@ -78,13 +86,16 @@ export const createCategory = (category) => async (dispatch) => {
   }
 };
 
-export const deleteCategory = (categoryId) => async (dispatch) => {
+export const deleteCategory = (categoryId) => async (dispatch, getState) => {
   dispatch({
     type: CATEGORY_DELETE_REQUEST,
     payload: categoryId,
   });
   try {
-    const { data } = await Axios.delete(`/api/categories/${categoryId}`);
+    const { data } = await Axios.delete(
+      `/api/categories/${categoryId}`,
+      tokenConfig(getState)
+    );
     dispatch({
       type: CATEGORY_DELETE_SUCCESS,
       payload: { categoryId, data },
@@ -104,25 +115,27 @@ export const onEditCategory = (category) => async (dispatch, getState) => {
   });
 };
 
-export const editCategory = (categoryId, category) => async (
-  dispatch,
-  getState
-) => {
-  console.log(category);
-  dispatch({
-    type: CATEGORY_EDIT_REQUEST,
-  });
+export const editCategory =
+  (categoryId, category) => async (dispatch, getState) => {
+    console.log(category);
+    dispatch({
+      type: CATEGORY_EDIT_REQUEST,
+    });
 
-  try {
-    const { data } = await Axios.put(`api/categories/${categoryId}`, category);
-    dispatch({
-      type: CATEGORY_EDIT_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CATEGORY_EDIT_FAIL,
-      payload: error.message,
-    });
-  }
-};
+    try {
+      const { data } = await Axios.put(
+        `api/categories/${categoryId}`,
+        category,
+        tokenConfig(getState)
+      );
+      dispatch({
+        type: CATEGORY_EDIT_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CATEGORY_EDIT_FAIL,
+        payload: error.message,
+      });
+    }
+  };

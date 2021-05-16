@@ -14,13 +14,14 @@ import { loadUser } from "./actions/authActions";
 import { useHistory } from "react-router-dom";
 import ShopScreen from "./screens/ShopScreen";
 import DashboardScreen from "./screens/DashboardScreen";
+import SettingsScreen from "./screens/SettingsScreen";
 
 function App(props) {
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(loadUser());
+    // dispatch(loadUser());
   }, [dispatch, history]);
   return (
     <Router>
@@ -46,6 +47,7 @@ function App(props) {
               component={ProductDetailsScreen}
             />
             <PrivateRoute path="/dashboard" exact component={DashboardScreen} />
+            <PrivateRoute path="/settings" exact component={SettingsScreen} />
           </Switch>
         </main>
       </div>

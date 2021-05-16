@@ -80,8 +80,8 @@
   transition: all .8s ease;
 }
 .place-order-btn {
-  background-color: #ffc28c;
+  background-color: var(--primary-color);
   font-size: 1.8rem;
   font-weight: 600;
-  color: var(--text-color);
+  color: #fff;
 }

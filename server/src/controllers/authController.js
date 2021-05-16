@@ -6,6 +6,7 @@ const {
   userLoginSchema,
 } = require("../utils/validation_schema");
 const bcrypt = require("bcrypt");
+const { exist } = require("joi");
 
 // function to login
 const login = async (req, res) => {
@@ -70,8 +71,40 @@ const getCurrentUser = async (req, res) => {
   res.json(user);
 };
 
+// updating password
+const updatePassword = async (req, res) => {
+  // get req.body
+  const { oldPassword, newPassword } = req.body;
+
+  if (oldPassword === "") {
+    return res.status(400).json({ message: "Old password must be provided" });
+  } else if (newPassword === "" || newPassword.length < 8) {
+    return res
+      .status(400)
+      .json({ message: "New password must be 8 char length" });
+  }
+  // finding current user
+  try {
+    const user = await Users.findById(req.user.id);
+    if (user) {
+      let isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (isMatch) {
+        let newHash = await bcrypt.hash(newPassword, saltRounds);
+        user.password = newHash;
+        await user.save();
+        res.status(200).json({ message: "Password has been updated." });
+      } else {
+        res.status(400).json({ message: "Password donot match" });
+      }
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 module.exports = {
   login,
   register,
   getCurrentUser,
+  updatePassword,
 };

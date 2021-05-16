@@ -5,6 +5,9 @@ import {
   USER_LOADING,
   USER_LOADED,
   AUTH_LOG_OUT,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_FAIL,
+  UPDATE_PASSWORD_SUCCESS,
 } from "../constants/authConstants";
 import Axios from "axios";
 
@@ -43,7 +46,6 @@ export const authLogin = (email, password) => async (dispatch) => {
     });
   } catch (error) {
     const errMsg = error.response?.data.message;
-    console.log(errMsg);
     dispatch({
       type: AUTH_LOGIN_FAIL,
       payload: errMsg,
@@ -68,6 +70,31 @@ export const authRegister = () => async (dispatch) => {
   //   });
   // }
 };
+
+export const updatePassword =
+  (oldPassword, newPassword) => async (dispatch, getState) => {
+    dispatch({
+      type: UPDATE_PASSWORD_REQUEST,
+    });
+
+    try {
+      const { data } = await Axios.put(
+        "/api/auth/update",
+        { oldPassword, newPassword },
+        tokenConfig(getState)
+      );
+      console.log(data);
+      dispatch({
+        type: UPDATE_PASSWORD_SUCCESS,
+        payload: data?.message,
+      });
+    } catch (error) {
+      dispatch({
+        type: UPDATE_PASSWORD_FAIL,
+        payload: error.response?.data.message,
+      });
+    }
+  };
 
 export const authLogout = () => (dispatch) => {
   dispatch({

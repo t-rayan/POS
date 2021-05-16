@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const path = require("path");
-
+const authHandler = require("./src/middlewares/authHandler");
 //initializing dotenv config to access env variables
 dotenv.config();
 
@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/categories", categoryRoutes);
+app.use("/api/categories", authHandler, categoryRoutes);
 app.use("/api/orders", orderRoutes);
 
 const port = process.env.PORT || 5000;

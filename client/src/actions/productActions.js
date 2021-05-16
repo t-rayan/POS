@@ -135,6 +135,7 @@ export const editProduct = (product) => async (dispatch, getState) => {
         category: category,
         desc: desc,
       },
+      tokenConfig(getState),
       header
     );
     dispatch({

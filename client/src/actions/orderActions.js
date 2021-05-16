@@ -14,14 +14,15 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
 } from "../constants/orderConstants";
+import { tokenConfig } from "./authActions";
 
-export const listOrders = () => async (dispatch) => {
+export const listOrders = () => async (dispatch, getState) => {
   dispatch({
     type: ORDER_LIST_REQUEST,
   });
 
   try {
-    const { data } = await Axios.get("/api/orders");
+    const { data } = await Axios.get("/api/orders", tokenConfig(getState));
     dispatch({
       type: ORDER_LIST_SUCCESS,
       payload: data,
@@ -34,13 +35,16 @@ export const listOrders = () => async (dispatch) => {
   }
 };
 
-export const orderDetails = (orderId) => async (dispatch) => {
+export const orderDetails = (orderId) => async (dispatch, getState) => {
   dispatch({
     type: ORDER_DETAILS_REQUEST,
   });
 
   try {
-    const { data } = await Axios.get(`/api/orders/${orderId}`);
+    const { data } = await Axios.get(
+      `/api/orders/${orderId}`,
+      tokenConfig(getState)
+    );
     dispatch({
       type: ORDER_DETAILS_SUCCESS,
       payload: data,
@@ -53,41 +57,47 @@ export const orderDetails = (orderId) => async (dispatch) => {
   }
 };
 
-export const createOrder = (orderItems, totalPrice, discount) => async (
-  dispatch
-) => {
-  dispatch({
-    type: ORDER_CREATE_REQUEST,
-  });
-  let d = new Date();
-  const order = {
-    orderItems: orderItems,
-    totalPrice: totalPrice,
-    discount: discount,
-    totalProducts: orderItems?.length,
-    orderDate: d,
+export const createOrder =
+  (orderItems, totalPrice, discount) => async (dispatch, getState) => {
+    dispatch({
+      type: ORDER_CREATE_REQUEST,
+    });
+    let d = new Date();
+    const order = {
+      orderItems: orderItems,
+      totalPrice: totalPrice,
+      discount: discount,
+      totalProducts: orderItems?.length,
+      orderDate: d,
+    };
+    try {
+      const { data } = await Axios.post(
+        "/api/orders",
+        order,
+        tokenConfig(getState)
+      );
+      dispatch({
+        type: ORDER_CREATE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ORDER_CREATE_FAIL,
+        payload: error.message,
+      });
+    }
   };
-  try {
-    const { data } = await Axios.post("/api/orders", order);
-    dispatch({
-      type: ORDER_CREATE_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: ORDER_CREATE_FAIL,
-      payload: error.message,
-    });
-  }
-};
 
-export const deleteOrder = (orderId) => async (dispatch) => {
+export const deleteOrder = (orderId) => async (dispatch, getState) => {
   dispatch({
     type: ORDER_DELETE_REQUEST,
   });
 
   try {
-    const { data } = await Axios.delete(`/api/orders/${orderId}`);
+    const { data } = await Axios.delete(
+      `/api/orders/${orderId}`,
+      tokenConfig(getState)
+    );
     dispatch({
       type: ORDER_DELETE_SUCCESS,
       payload: { data, orderId },

@@ -47,7 +47,6 @@ a {
   display: grid;
   grid-template-columns: 1fr;
   justify-content: center;
-  align-items: center;
 }
 
 /* flex layouts */
@@ -79,6 +78,7 @@ a {
   align-items: flex-start;
 }
 .row.align-center {
+  justify-content: flex-start !important;
   align-items: center;
 }
 

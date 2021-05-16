@@ -3,13 +3,16 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
 import { authLogin } from "../../actions/authActions";
+import MessageBox from "../../components/MessageBox";
+import { CLEAR_AUTH_ERRORS } from "../../constants/authConstants";
+import { FaTimes } from "react-icons/fa";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
   const authState = useSelector((state) => state.authState);
-  const { isLoggedIn, token } = authState;
+  const { error, token, loading } = authState;
 
   const [state, setState] = useState({
     email: "",
@@ -17,8 +20,8 @@ const LoginScreen = () => {
   });
 
   const handleChange = (e) => {
+    error && dispatch({ type: CLEAR_AUTH_ERRORS });
     const value = e.target.value;
-
     setState({
       ...state,
       [e.target.name]: value,
@@ -27,12 +30,10 @@ const LoginScreen = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (state.email && state.password) {
-      dispatch(authLogin(state.email, state.password));
-    }
-    if (token) {
-      history.push("/products");
-    }
+    // if (state.email && state.password) {
+    //   dispatch(authLogin(state.email, state.password));
+    // }
+    dispatch(authLogin(state.email, state.password));
   };
   // useeffect hook
   useEffect(() => {
@@ -42,7 +43,7 @@ const LoginScreen = () => {
   }, [token, history]);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="login-form">
       <input
         type="email"
         name="email"
@@ -57,8 +58,20 @@ const LoginScreen = () => {
         placeholder="Enter your password"
         onChange={handleChange}
       />
-
-      <Button className="btn primary btn-lg">Login</Button>
+      {error ? (
+        <MessageBox variant="danger">
+          <div className="row">
+            <p>{error}</p>
+            <FaTimes
+              className="icon"
+              onClick={() => dispatch({ type: CLEAR_AUTH_ERRORS })}
+            />
+          </div>
+        </MessageBox>
+      ) : null}
+      <Button className="btn primary btn-lg" disabled={loading}>
+        Login
+      </Button>
     </form>
   );
 };

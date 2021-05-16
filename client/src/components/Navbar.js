@@ -28,7 +28,7 @@ const Navbar = () => {
   );
   return (
     <>
-      {toggleMenu && (
+      {token && toggleMenu && (
         <MobileMenu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
       )}
       <div className="row p-2">
@@ -37,15 +37,16 @@ const Navbar = () => {
             POS
           </Link>
         </div>
-        <div className="menuIcon-container">
-          {!toggleMenu ? (
-            <FaBars className="icon" onClick={showMenu} />
-          ) : (
-            <FaTimes className="icon" onClick={showMenu} size="20" />
-          )}
-        </div>
+
         {token && (
           <>
+            <div className="menuIcon-container">
+              {!toggleMenu ? (
+                <FaBars className="icon" onClick={showMenu} />
+              ) : (
+                <FaTimes className="icon" onClick={showMenu} size="20" />
+              )}
+            </div>
             <div className="middle-links">
               <Link to="/dashboard" className="nav-link">
                 Dashboard
@@ -72,10 +73,10 @@ const Navbar = () => {
                   {cartItems === 0 ? "0" : cartItems.length}
                 </span>
               </div>
-              <FaCog
-                className="icon header-icons setting-icon"
-                onClick={() => setToggleDropDown(!toggleDropDown)}
-              />
+              <Link to="/settings">
+                <FaCog className="icon header-icons setting-icon" />
+              </Link>
+
               <FaSignOutAlt
                 className="icon header-icons logout-icon"
                 onClick={() => dispatch(authLogout())}

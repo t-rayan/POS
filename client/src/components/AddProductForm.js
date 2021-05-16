@@ -26,6 +26,9 @@ const AddProductForm = ({ setToggleForm }) => {
 
   useEffect(() => {
     dispatch(listCategory());
+    setTimeout(() => {
+      dispatch({ type: CLEAR_PRODUCT_ERRORS });
+    }, 5000);
     if (editable !== null) {
       setPId(editable._id);
       setPName(editable.name);

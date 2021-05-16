@@ -52,10 +52,10 @@ const AddCategoryForm = ({ setToggleForm }) => {
 
   return (
     <FormLayout>
-      <div className="row mb-2">
-        <h3>{editable !== null ? "Edit Category" : "Add Category"}</h3>
-      </div>
       <form className="category-form">
+        <div className="row mb-2">
+          <h3>{editable !== null ? "Edit Category" : "Add Category"}</h3>
+        </div>
         <div className="row column sub-column input-groups">
           <input
             type="text"
