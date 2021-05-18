@@ -1,11 +1,6 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import {
-  dateFilter,
-  getDuplicateDates,
-  getTotalPrice,
-} from "../utils/dateFilter";
 import moment from "moment";
 
 const LineChart = () => {
@@ -31,10 +26,13 @@ const LineChart = () => {
     }, {})
   );
 
-  const reversed = withTotalPrice.reverse().slice(0, 7);
-  const labels = reversed.map((x) => x.orderDate);
+  const reversed = withTotalPrice.reverse();
+  const sliced = reversed.slice(0, 7).reverse();
 
-  const lineData = reversed.map((x) => x.totalPrice);
+  const labels = sliced.map((x) => x.orderDate);
+
+  const lineData = sliced.map((x) => x.totalPrice);
+
   return (
     <div>
       <Line

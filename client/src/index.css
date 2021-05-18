@@ -50,6 +50,7 @@ nav {
   cursor: pointer;
 }
 
+
 .menuIcon-container {
   display: none;
 }
@@ -59,10 +60,9 @@ nav {
 }
 
 ::placeholder {
-  font-size: 1.25rem;
+  font-size: 1.25rem; 
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
-
+font-family: 'Poppins', sans-serif;
 }
 
 .uppercase {
@@ -227,12 +227,15 @@ main {
 }
 
 .search-input {
-  border: none;
   border-radius: 4px !important;
   font-size: 1.5rem;
   color: var(--text-color);
+  text-indent: 30px;
+  padding: 1.2rem !important;
 }
-
+.search-input::placeholder {
+  font-size: 1.5rem;  
+}
 /* product */
 .product-card {
   background: #fff;
@@ -276,11 +279,6 @@ main {
 
 .stock div {
   margin: 1rem 0;
-}
-
-.search-box {
-  flex-basis: 300px;
-  margin-top: 0 !important;
 }
 
 input[type="text"],
@@ -715,7 +713,45 @@ form {
 .form-input {
   margin-bottom: 2rem;
 }
+.old-password {
+  position: relative;
+}
+.field-icon {
+  position: absolute;
+  margin: 1.4rem -3rem;
+}
 
+/* search box css */
+.search-box {
+  position: relative;
+}
+.search-icon {
+  position: absolute;
+  margin: 1.6rem 1.5rem;
+  font-size: 1.8rem;
+  color: var(--primary-color);
+}
+
+/* empty page css */
+.empty-container {
+  height: 100%;
+  display: grid;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.empty-container > div {
+  background-color: #dde8fc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 8rem;
+  border-radius: 5px;
+}
+.empty-container > div > * {
+  margin-bottom: 1.5rem;
+}
 /* animations */
 /* Safari */
 @-webkit-keyframes spin {

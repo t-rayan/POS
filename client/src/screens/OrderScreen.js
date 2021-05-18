@@ -91,13 +91,14 @@ const OrderScreen = () => {
 
   if (loading) {
     return <LoadingBox classname="loader" />;
-  } else if (orders.length === 0) {
+  } else if (orders?.length === 0) {
     return (
       <EmptyPage title="No Orders">
-        <FaFolderOpen className="text-muted empty-icon" />
+        <FaFolderOpen className="empty-icon" />
+        <p>No orders</p>
         <Button
           className="btn btn-xs primary mt-1"
-          handleClick={() => history.push("/")}
+          handleClick={() => history.push("/shop")}
         >
           Add New
         </Button>
@@ -109,7 +110,7 @@ const OrderScreen = () => {
       <div className="container">
         <div className="table-container py-3">
           <Toolbar
-            title="All Categories"
+            title="All Orders"
             placeholder="Order ID"
             searchText={searchText}
             setSearchText={setSearchText}

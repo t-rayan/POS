@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import {
   deleteCategory,
   listCategory,
   onEditCategory,
 } from "../actions/categoryActions";
 import Toolbar from "../components/Toolbar";
-import { FaTrash, FaEdit, FaTimes, FaCheck, FaInfo } from "react-icons/fa";
+import { FaTrash, FaEdit, FaCartPlus } from "react-icons/fa";
 import AddCategoryForm from "../components/AddCategoryForm";
-import LoadingBox from "../components/LoadingBox";
 import Pagination from "../components/Pagination";
 import { getCurrentValues } from "../utils/getCurrentValues";
-import MessageBox from "../components/MessageBox";
 import { CLEAR_CATEGORY_MESSAGE } from "../constants/categoryConstants";
-import { motion } from "framer-motion";
 import Layout from "../components/Layout";
+import EmptyPage from "../components/EmptyPage";
+import Button from "../components/Button";
 
 const CategoryScreen = (props) => {
   const dispatch = useDispatch();
@@ -27,7 +26,7 @@ const CategoryScreen = (props) => {
   const [searchText, setSearchText] = useState("");
 
   const categoryState = useSelector((state) => state.categoryState);
-  const { loading, error, categories, message } = categoryState;
+  const { loading, categories, message } = categoryState;
 
   useEffect(() => {
     dispatch(listCategory());
@@ -46,7 +45,7 @@ const CategoryScreen = (props) => {
   // function to handle toggle form
   const displayFormHandler = (e) => {
     e.preventDefault();
-    setToggleForm(true);
+    history.push("/addCategory");
   };
 
   const clearMessage = () => {
@@ -93,7 +92,7 @@ const CategoryScreen = (props) => {
                 <FaEdit
                   className="edit-icon icon"
                   onClick={() => {
-                    setToggleForm(true);
+                    history.push("/addCategory");
                     dispatch(onEditCategory(category));
                   }}
                 />
@@ -107,8 +106,20 @@ const CategoryScreen = (props) => {
 
   return (
     <Layout message={message} loading={loading} clearMessage={clearMessage}>
-      {toggleForm ? (
-        <AddCategoryForm setToggleForm={setToggleForm} />
+      {categories?.length === 0 ? (
+        <EmptyPage>
+          <FaCartPlus className="empty-icon" />
+          <h3>No Categories</h3>
+          <p>Please add categories to start selling.</p>
+          <Button
+            className="btn btn-sm primary"
+            handleClick={() => {
+              history.push("/addCategory");
+            }}
+          >
+            Add Categories
+          </Button>
+        </EmptyPage>
       ) : (
         <div className="container">
           <div className="table-container py-3">

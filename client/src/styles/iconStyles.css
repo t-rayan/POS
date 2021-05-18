@@ -49,3 +49,6 @@
 .dashboard-icon {
   color: var(--secondary-color);
 }
+.showPswd-btn {
+  cursor: pointer;
+}

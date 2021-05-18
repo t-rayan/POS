@@ -9,14 +9,15 @@ import Button from "./Button";
 import MessageBox from "./MessageBox";
 import FormLayout from "./FormLayout";
 import { useHistory } from "react-router-dom";
+import { FaTimes } from "react-icons/fa";
 
-const AddCategoryForm = ({ setToggleForm }) => {
+const AddCategoryForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [cname, setCname] = useState("");
 
   const categoryState = useSelector((state) => state.categoryState);
-  const { editable, error } = categoryState;
+  const { editable, error, loading } = categoryState;
 
   useEffect(() => {
     if (editable !== null || undefined) {
@@ -29,9 +30,9 @@ const AddCategoryForm = ({ setToggleForm }) => {
   // cancel form or close form
   const closeFormHandler = (e) => {
     e.preventDefault();
-    setToggleForm(false);
     dispatch({ type: CATEGORY_EDIT_RESET });
     dispatch({ type: CLEAR_CATEGORY_ERRORS });
+    history.push("/categories");
   };
 
   // function to handle add and edit
@@ -68,10 +69,24 @@ const AddCategoryForm = ({ setToggleForm }) => {
             }}
           />
         </div>
-        {error ? <MessageBox variant="danger"> {error} </MessageBox> : null}
+        {error ? (
+          <MessageBox variant="danger">
+            <div className="row">
+              <p>{error}</p>
+              <FaTimes
+                className="icon"
+                onClick={() => dispatch({ type: CLEAR_CATEGORY_ERRORS })}
+              />
+            </div>
+          </MessageBox>
+        ) : null}
 
         <div className="btn-holder">
-          <Button className="btn btn-sm primary" handleClick={handleSubmit}>
+          <Button
+            className="btn btn-sm primary"
+            handleClick={handleSubmit}
+            disabled={loading}
+          >
             {editable !== null ? "Update Category" : "Add"}
           </Button>
           <Button className="btn btn-sm cancel" handleClick={closeFormHandler}>

@@ -141,7 +141,7 @@ const Transaction = () => {
           <p className="text-muted">Cart is Empty</p>
         </div>
       ) : (
-        <motion.div
+        <div
           initial={{ opacity: 0, x: 200 }}
           animate={{ opacity: 1, x: 0 }}
           className="transacton-screen"
@@ -228,7 +228,7 @@ const Transaction = () => {
               </Button>
             )}
           </div>
-        </motion.div>
+        </div>
       )}
     </div>
   );

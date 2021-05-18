@@ -15,7 +15,7 @@ const productSchema = (data) => {
     price: Joi.number().required(),
     stock: Joi.number().required(),
     desc: Joi.string(),
-    category: Joi.any(),
+    category: Joi.string(),
   });
 
   return schema.validateAsync(data);

@@ -15,6 +15,8 @@ import { useHistory } from "react-router-dom";
 import ShopScreen from "./screens/ShopScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SettingsScreen from "./screens/SettingsScreen";
+import AddCategoryScreen from "./screens/AddCategoryScreen";
+import AddProductScreen from "./screens/AddProductScreen";
 
 function App(props) {
   const dispatch = useDispatch();
@@ -35,7 +37,17 @@ function App(props) {
             <PrivateRoute path="/shop" exact component={ShopScreen} />
             {/* <Route path="/login" exact component={AuthScreens} /> */}
             <PrivateRoute path="/categories" exact component={CategoryScreen} />
+            <PrivateRoute
+              path="/addCategory"
+              exact
+              component={AddCategoryScreen}
+            />
             <PrivateRoute path="/products" exact component={ProductScreen} />
+            <PrivateRoute
+              path="/addProduct"
+              exact
+              component={AddProductScreen}
+            />
             <PrivateRoute path="/orders" exact component={OrderScreen} />
             <PrivateRoute path="/orders/:id" component={OrderDetailsScreen} />
             <PrivateRoute

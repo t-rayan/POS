@@ -6,24 +6,11 @@ import {
   onEditProduct,
 } from "../actions/productActions";
 import AddProductForm from "../components/AddProductForm";
-import LoadingBox from "../components/LoadingBox";
-import MessageBox from "../components/MessageBox";
-import {
-  FaTrash,
-  FaEdit,
-  FaShippingFast,
-  FaCheck,
-  FaTimes,
-} from "react-icons/fa";
-import {
-  CHECK_FOR_EMPTY,
-  CLEAR_PRODUCT_MESSAGE,
-  PRODUCT_EDIT_RESET,
-} from "../constants/productConstants";
+import { FaTrash, FaEdit, FaShoppingBasket } from "react-icons/fa";
+import { CLEAR_PRODUCT_MESSAGE } from "../constants/productConstants";
 import Toolbar from "../components/Toolbar";
 import EmptyPage from "../components/EmptyPage";
 import Button from "../components/Button";
-import { listCategory } from "../actions/categoryActions";
 import Pagination from "../components/Pagination";
 import { getCurrentValues } from "../utils/getCurrentValues";
 import Layout from "../components/Layout";
@@ -38,7 +25,7 @@ const ProductScreen = () => {
 
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.productState);
-  const { loading, error, products, message } = productState;
+  const { loading, products, message } = productState;
 
   useEffect(() => {
     dispatch(listProducts());
@@ -54,7 +41,7 @@ const ProductScreen = () => {
 
   const displayFormHandler = (e) => {
     e.preventDefault();
-    setToggleForm(true);
+    history.push("/addProduct");
   };
   const handleRedirect = (id) => {
     history.push(`/products/${id}`);
@@ -102,7 +89,7 @@ const ProductScreen = () => {
               <FaEdit
                 className="edit-icon icon"
                 onClick={() => {
-                  setToggleForm(true);
+                  history.push("/addProduct");
                   dispatch(onEditProduct(p));
                 }}
               />
@@ -115,8 +102,20 @@ const ProductScreen = () => {
 
   return (
     <Layout message={message} loading={loading} clearMessage={clearMessage}>
-      {toggleForm ? (
-        <AddProductForm setToggleForm={setToggleForm} />
+      {products?.length === 0 ? (
+        <EmptyPage>
+          <FaShoppingBasket className="empty-icon" />
+          <h3>No Products</h3>
+          <p>Please add products to start selling.</p>
+          <Button
+            className="btn btn-sm primary"
+            handleClick={() => {
+              history.push("/addProduct");
+            }}
+          >
+            Add Products
+          </Button>
+        </EmptyPage>
       ) : (
         <div className="container">
           <div className="table-container py-3">

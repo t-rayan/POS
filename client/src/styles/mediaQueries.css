@@ -63,6 +63,8 @@
   text-align: center;
 }
 
+
+
 }
 @media (max-width:1024px) {
   .centered-grid .container {
@@ -75,6 +77,10 @@
  .settings-container {
    grid-template-columns: .9fr !important;
  }
+ .change-password-card .card-body {
+  grid-template-columns: .8fr 1fr !important;
+
+}
  
 }
 @media (min-width:768px) {

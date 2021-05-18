@@ -1,5 +1,6 @@
 import Axios from "axios";
 import {
+  ADD_ITEM_REQUEST,
   CART_ADD_ITEM,
   CART_DELETE_ITEM,
   CART_ITEM_RESET,
@@ -9,6 +10,9 @@ import {
 import { tokenConfig } from "./authActions";
 export const addToCart =
   (productId, qty, finalPrice) => async (dispatch, getState) => {
+    dispatch({
+      type: ADD_ITEM_REQUEST,
+    });
     try {
       const { data } = await Axios.get(
         `/api/products/${productId}`,

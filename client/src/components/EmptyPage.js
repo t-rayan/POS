@@ -1,7 +1,11 @@
 import React from "react";
 
 const EmptyPage = ({ children, title }) => {
-  return <div className="row center-column">{children}</div>;
+  return (
+    <div className=" empty-container">
+      <div> {children}</div>
+    </div>
+  );
 };
 
 export default EmptyPage;

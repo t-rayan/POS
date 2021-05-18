@@ -1,4 +1,5 @@
 import {
+  ADD_ITEM_REQUEST,
   CART_ADD_ITEM,
   CART_DELETE_ITEM,
   CART_ITEM_RESET,
@@ -10,9 +11,15 @@ import {
 const initState = {
   cartItems: [],
   pending: false,
+  loading: false,
 };
 export const cartReducer = (state = initState, action) => {
   switch (action.type) {
+    case ADD_ITEM_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
     case CART_ADD_ITEM:
       const item = action.payload;
       const existItem = state.cartItems.find((x) => x.product === item.product);
@@ -29,11 +36,13 @@ export const cartReducer = (state = initState, action) => {
         return {
           ...state,
           cartItems: newArray,
+          loading: false,
         };
       } else {
         return {
           ...state,
           cartItems: [item, ...state.cartItems],
+          loading: false,
         };
       }
 

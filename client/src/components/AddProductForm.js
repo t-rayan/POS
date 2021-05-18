@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { listCategory } from "../actions/categoryActions";
 import { createProduct, editProduct } from "../actions/productActions";
 import {
@@ -9,8 +10,11 @@ import {
 import Button from "./Button";
 import MessageBox from "./MessageBox";
 import FormLayout from "./FormLayout";
+import { FaTimes } from "react-icons/fa";
 
-const AddProductForm = ({ setToggleForm }) => {
+const AddProductForm = () => {
+  const history = useHistory();
+
   const [pid, setPId] = useState("");
   const [pname, setPName] = useState("");
   const [pprice, setPPrice] = useState(0);
@@ -21,7 +25,7 @@ const AddProductForm = ({ setToggleForm }) => {
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.categoryState);
   const productState = useSelector((state) => state.productState);
-  const { editable, loading, error } = productState;
+  const { editable, loading, error, message } = productState;
   const { categories } = categoryState;
 
   useEffect(() => {
@@ -44,7 +48,7 @@ const AddProductForm = ({ setToggleForm }) => {
       setPStock("");
       setPDesc("");
     }
-  }, [dispatch]);
+  }, [dispatch, editable]);
 
   const clearState = () => {
     setPId("");
@@ -58,9 +62,9 @@ const AddProductForm = ({ setToggleForm }) => {
   // cancel form or close form
   const closeFormHandler = (e) => {
     e.preventDefault();
-    setToggleForm(false);
     dispatch({ type: PRODUCT_EDIT_RESET });
     dispatch({ type: CLEAR_PRODUCT_ERRORS });
+    history.push("/products");
   };
 
   // dispatching createProduct function
@@ -146,7 +150,17 @@ const AddProductForm = ({ setToggleForm }) => {
             onChange={(e) => setPDesc(e.target.value)}
           ></textarea>
         </div>
-        {error ? <MessageBox variant="danger">{error}</MessageBox> : null}
+        {error ? (
+          <MessageBox variant="danger">
+            <div className="row">
+              <p>{error}</p>
+              <FaTimes
+                className="icon"
+                onClick={() => dispatch({ type: CLEAR_PRODUCT_ERRORS })}
+              />
+            </div>
+          </MessageBox>
+        ) : null}
 
         <div className="btn-holder">
           <Button

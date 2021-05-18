@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogout, updatePassword } from "../actions/authActions";
+import { updatePassword } from "../actions/authActions";
 import {
   CLEAR_AUTH_ERRORS,
   CLEAR_AUTH_MESSAGES,
 } from "../constants/authConstants";
 import Button from "./Button";
 import MessageBox from "./MessageBox";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes, FaEye } from "react-icons/fa";
 
 const ChangePasswordForm = () => {
   const dispatch = useDispatch();
@@ -16,11 +16,18 @@ const ChangePasswordForm = () => {
 
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [inputType, setInputType] = useState("password");
   const submitForm = () => {
     dispatch(updatePassword(oldPassword, newPassword));
     setOldPassword("");
     setNewPassword("");
   };
+
+  useEffect(() => {
+    if (oldPassword === "") {
+      setInputType("password");
+    }
+  }, [oldPassword]);
   return (
     <div className="change-password-card">
       <div className="card-header">
@@ -31,12 +38,27 @@ const ChangePasswordForm = () => {
           <div className="form-input">
             <label htmlFor="old-pswd">Old Password</label>
             <input
-              type="password"
+              type={inputType}
               name="oldPassword"
+              className="old-password"
               value={oldPassword}
               placeholder="Enter your old password"
               onChange={(e) => setOldPassword(e.target.value)}
             />
+            <span className="field-icon">
+              {oldPassword && (
+                <FaEye
+                  className="showPswd-btn"
+                  onClick={() => {
+                    if (inputType === "password") {
+                      setInputType("text");
+                    } else {
+                      setInputType("password");
+                    }
+                  }}
+                />
+              )}
+            </span>
           </div>
           <div className="form-input">
             <label htmlFor="new-pswd">New Password</label>
@@ -81,7 +103,8 @@ const ChangePasswordForm = () => {
           </Button>
         </div>
         <div className="text-muted p-4">
-          <p>* Password must be 8 character long</p>
+          <li> Password must be 8 character long</li>
+          <li>Logout is required to apply changes</li>
         </div>
       </div>
     </div>

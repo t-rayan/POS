@@ -1,8 +1,11 @@
 import React from "react";
-
+import { FaSearch } from "react-icons/fa";
 const SearchBox = ({ type, placeholder, searchText, onChange }) => {
   return (
-    <div>
+    <div className="search-box">
+      <span className="search-icon">
+        <FaSearch />
+      </span>
       <input
         type={type}
         placeholder={placeholder}
