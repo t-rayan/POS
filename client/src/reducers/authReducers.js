@@ -84,7 +84,6 @@ export const authReducer = (state = initState, action) => {
     case CLEAR_AUTH_ERRORS:
       return {
         ...state,
-        isLoggedIn: false,
         error: null,
       };
     case CLEAR_AUTH_MESSAGES:

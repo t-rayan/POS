@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import ProductScreen from "./screens/ProductScreen";
@@ -17,12 +15,6 @@ import AddCategoryScreen from "./screens/AddCategoryScreen";
 import AddProductScreen from "./screens/AddProductScreen";
 
 function App(props) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    // dispatch(loadUser());
-  }, [dispatch]);
-
   return (
     <Router>
       <div className="grid-container">

@@ -90,10 +90,10 @@ export const productReducer = (state = initState, action) => {
     case PRODUCT_DELETE_SUCCESS:
       return {
         ...state,
+        loading: false,
         products: state.products.filter(
           (product) => product._id !== action.payload.productId
         ),
-        loading: false,
       };
     case PRODUCT_DELETE_FAIL:
       return {

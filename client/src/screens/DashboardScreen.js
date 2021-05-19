@@ -15,17 +15,21 @@ const DashboardScreen = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const authState = useSelector((state) => state.authState);
-  const { userInfo, loading } = authState;
+  const { userInfo, loading, isLoggedIn } = authState;
   const productState = useSelector((state) => state.productState);
   const { products } = productState;
   const orderState = useSelector((state) => state.orderState);
   const { orders } = orderState;
   // useeffect hook
   useEffect(() => {
+    if (!isLoggedIn) {
+      history.push("/");
+    }
     dispatch(loadUser());
     dispatch(listProducts());
     dispatch(listOrders());
   }, [dispatch]);
+
   return (
     <Layout loading={loading}>
       {products?.length === 0 ? (

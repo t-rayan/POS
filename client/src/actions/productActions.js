@@ -113,6 +113,10 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
     );
     if (data) {
       dispatch({
+        type: PRODUCT_DELETE_SUCCESS,
+        payload: { data, productId },
+      });
+      dispatch({
         type: SET_MESSAGE,
         payload: data.message,
       });

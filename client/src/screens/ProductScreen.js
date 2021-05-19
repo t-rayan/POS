@@ -76,8 +76,10 @@ const ProductScreen = () => {
             <p>{p.stock}</p>
             <div className="row align-center">
               <FaTrash
-                onClick={() => dispatch(deleteProduct(p._id))}
                 className="trash-icon icon"
+                onClick={() => {
+                  dispatch(deleteProduct(p._id));
+                }}
               />
               <FaEdit
                 className="edit-icon icon"
