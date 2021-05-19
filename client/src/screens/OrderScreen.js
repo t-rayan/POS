@@ -22,7 +22,7 @@ const OrderScreen = () => {
 
   const orderState = useSelector((state) => state.orderState);
 
-  const { orders, loading, error, message } = orderState;
+  const { orders, loading } = orderState;
   useEffect(() => {
     dispatch(listOrders());
   }, [dispatch]);
@@ -32,10 +32,6 @@ const OrderScreen = () => {
     ordersPerPage,
     orders
   );
-
-  const clearMessage = () => {
-    dispatch({ type: CLEAR_ORDER_MESSAGE });
-  };
 
   const increaseValue = () => setCurrentPage(currentPage + 1);
   const decreaseValue = () => setCurrentPage(currentPage - 1);
@@ -106,7 +102,7 @@ const OrderScreen = () => {
     );
   }
   return (
-    <Layout loading={loading} message={message} clearMessage={clearMessage}>
+    <Layout loading={loading}>
       <div className="container">
         <div className="table-container py-3">
           <Toolbar

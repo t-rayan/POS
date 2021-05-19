@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../components/Button";
-import { authLogin } from "../../actions/authActions";
+import { authLogin, loadUser } from "../../actions/authActions";
 import MessageBox from "../../components/MessageBox";
 import { CLEAR_AUTH_ERRORS } from "../../constants/authConstants";
 import { FaTimes } from "react-icons/fa";
@@ -10,9 +10,8 @@ import { FaTimes } from "react-icons/fa";
 const LoginScreen = () => {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const authState = useSelector((state) => state.authState);
-  const { error, token, loading } = authState;
+  const { error, isLoggedIn, loading } = authState;
 
   const [state, setState] = useState({
     email: "",
@@ -35,12 +34,14 @@ const LoginScreen = () => {
     // }
     dispatch(authLogin(state.email, state.password));
   };
-  // useeffect hook
+
   useEffect(() => {
-    if (token) {
-      history.push("/dashboard");
-    }
-  }, [token, history]);
+    localStorage.getItem("token") && dispatch(loadUser());
+  }, [dispatch]);
+
+  if (isLoggedIn) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="login-form">
@@ -70,7 +71,7 @@ const LoginScreen = () => {
         </MessageBox>
       ) : null}
       <Button className="btn primary btn-lg" disabled={loading}>
-        Login
+        {loading ? "Loading" : "Login"}
       </Button>
     </form>
   );

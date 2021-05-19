@@ -25,7 +25,7 @@ const AddProductForm = () => {
   const dispatch = useDispatch();
   const categoryState = useSelector((state) => state.categoryState);
   const productState = useSelector((state) => state.productState);
-  const { editable, loading, error, message } = productState;
+  const { editable, loading, error } = productState;
   const { categories } = categoryState;
 
   useEffect(() => {
@@ -135,6 +135,7 @@ const AddProductForm = () => {
             className="category-input"
             onChange={(e) => setPCategory(e.target.value)}
           >
+            <option>Select Category</option>
             {categories?.map((category) => (
               <option key={category._id} value={category._id}>
                 {category.name}

@@ -23,7 +23,6 @@ const initState = {
   success: false,
   error: null,
   isConfirmed: false,
-  message: null,
 };
 
 export const orderReducer = (state = initState, action) => {
@@ -105,7 +104,6 @@ export const orderReducer = (state = initState, action) => {
       return {
         ...state,
         loading: false,
-        message: action.payload.data?.message,
         orders: state.orders.filter(
           (order) => order._id !== action.payload.orderId
         ),
@@ -115,15 +113,6 @@ export const orderReducer = (state = initState, action) => {
         ...state,
         error: action.payload,
       };
-
-    case CLEAR_ORDER_MESSAGE:
-      return {
-        ...state,
-        message: null,
-        error: null,
-        loading: false,
-      };
-
     case CLEAR_ORDER_ERRORS:
       return {
         ...state,

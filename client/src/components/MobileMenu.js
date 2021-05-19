@@ -14,7 +14,7 @@ import { authLogout } from "../actions/authActions";
 const MobileMenu = ({ toggleMenu, setToggleMenu }) => {
   const dispatch = useDispatch();
   const authState = useSelector((state) => state.authState);
-  const { token } = authState;
+  const { isLoggedIn } = authState;
 
   const links = [
     {
@@ -52,7 +52,7 @@ const MobileMenu = ({ toggleMenu, setToggleMenu }) => {
 
   return (
     <AnimatePresence>
-      {token && (
+      {isLoggedIn && (
         <motion.div
           initial={{ opacity: 0, x: -400 }}
           animate={{ opacity: 1, x: 0 }}

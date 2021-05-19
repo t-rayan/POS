@@ -1,5 +1,5 @@
 import Axios from "axios";
-import moment from "moment";
+import { SET_MESSAGE } from "../constants/msgConstants";
 import {
   ORDER_CREATE_FAIL,
   ORDER_CREATE_REQUEST,
@@ -14,7 +14,8 @@ import {
   ORDER_LIST_REQUEST,
   ORDER_LIST_SUCCESS,
 } from "../constants/orderConstants";
-import { tokenConfig } from "./authActions";
+import { tokenConfig } from "../utils/authHeader";
+import { apiUrl } from "../utils/config";
 
 export const listOrders = () => async (dispatch, getState) => {
   dispatch({
@@ -22,7 +23,8 @@ export const listOrders = () => async (dispatch, getState) => {
   });
 
   try {
-    const { data } = await Axios.get("/api/orders", tokenConfig(getState));
+    const { data } = await Axios.get(`${apiUrl}/orders`, tokenConfig(getState));
+
     dispatch({
       type: ORDER_LIST_SUCCESS,
       payload: data,
@@ -42,7 +44,7 @@ export const orderDetails = (orderId) => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.get(
-      `/api/orders/${orderId}`,
+      `${apiUrl}/orders/${orderId}`,
       tokenConfig(getState)
     );
     dispatch({
@@ -72,14 +74,16 @@ export const createOrder =
     };
     try {
       const { data } = await Axios.post(
-        "/api/orders",
+        `${apiUrl}/orders`,
         order,
         tokenConfig(getState)
       );
-      dispatch({
-        type: ORDER_CREATE_SUCCESS,
-        payload: data,
-      });
+      if (data) {
+        dispatch({
+          type: ORDER_CREATE_SUCCESS,
+          payload: data,
+        });
+      }
     } catch (error) {
       dispatch({
         type: ORDER_CREATE_FAIL,
@@ -95,13 +99,20 @@ export const deleteOrder = (orderId) => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.delete(
-      `/api/orders/${orderId}`,
+      `${apiUrl}/orders/${orderId}`,
       tokenConfig(getState)
     );
-    dispatch({
-      type: ORDER_DELETE_SUCCESS,
-      payload: { data, orderId },
-    });
+    if (data) {
+      console.log(data);
+      dispatch({
+        type: ORDER_DELETE_SUCCESS,
+        payload: { data, orderId },
+      });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: data.message,
+      });
+    }
   } catch (error) {
     dispatch({
       type: ORDER_DELETE_FAIL,

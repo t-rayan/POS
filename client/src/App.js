@@ -10,8 +10,6 @@ import ProductDetailsScreen from "./screens/ProductDetailsScreen";
 import OrderDetailsScreen from "./screens/OrderDetailsScreen";
 import AuthScreens from "./screens/AuthScreens";
 import PrivateRoute from "./PrivateRoute";
-import { loadUser } from "./actions/authActions";
-import { useHistory } from "react-router-dom";
 import ShopScreen from "./screens/ShopScreen";
 import DashboardScreen from "./screens/DashboardScreen";
 import SettingsScreen from "./screens/SettingsScreen";
@@ -20,11 +18,11 @@ import AddProductScreen from "./screens/AddProductScreen";
 
 function App(props) {
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     // dispatch(loadUser());
-  }, [dispatch, history]);
+  }, [dispatch]);
+
   return (
     <Router>
       <div className="grid-container">

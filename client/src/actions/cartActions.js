@@ -7,35 +7,35 @@ import {
   DECREASE_ITEM_QTY,
   INCREASE_ITEM_QTY,
 } from "../constants/cartConstants";
-import { tokenConfig } from "./authActions";
-export const addToCart =
-  (productId, qty, finalPrice) => async (dispatch, getState) => {
+import { tokenConfig } from "../utils/authHeader";
+import { apiUrl } from "../utils/config";
+export const addToCart = (productId, qty) => async (dispatch, getState) => {
+  dispatch({
+    type: ADD_ITEM_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(
+      `${apiUrl}/products/${productId}`,
+      tokenConfig(getState)
+    );
     dispatch({
-      type: ADD_ITEM_REQUEST,
+      type: CART_ADD_ITEM,
+      payload: {
+        name: data.name,
+        price: data.price,
+        product: data._id,
+        qty,
+        finalPrice: data.price * qty,
+      },
     });
-    try {
-      const { data } = await Axios.get(
-        `/api/products/${productId}`,
-        tokenConfig(getState)
-      );
-      dispatch({
-        type: CART_ADD_ITEM,
-        payload: {
-          name: data.name,
-          price: data.price,
-          product: data._id,
-          qty,
-          finalPrice: data.price * qty,
-        },
-      });
-      localStorage.setItem(
-        "cartItems",
-        JSON.stringify(getState().cartState.cartItems)
-      );
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cartState.cartItems)
+    );
+  } catch (error) {
+    console.log(error.response);
+  }
+};
 
 export const clearCart = () => async (dispatch, getState) => {
   dispatch({

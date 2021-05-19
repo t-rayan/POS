@@ -9,26 +9,17 @@ import { authLogout } from "../actions/authActions";
 const Navbar = () => {
   const dispatch = useDispatch();
   const [toggleMenu, setToggleMenu] = useState(false);
-  const [toggleDropDown, setToggleDropDown] = useState(false);
   const cartState = useSelector((state) => state.cartState);
   const { cartItems } = cartState;
 
   const authState = useSelector((state) => state.authState);
-  const { token } = authState;
+  const { isLoggedIn } = authState;
 
   const showMenu = () => setToggleMenu(!toggleMenu);
 
-  const dropDownUI = (
-    <div className="dropdown">
-      <ul>
-        <li>Setting</li>
-        <li>Logout</li>
-      </ul>
-    </div>
-  );
   return (
     <>
-      {token && toggleMenu && (
+      {isLoggedIn && toggleMenu && (
         <MobileMenu toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
       )}
       <div className="row p-2">
@@ -37,8 +28,7 @@ const Navbar = () => {
             POS
           </Link>
         </div>
-
-        {token && (
+        {isLoggedIn && (
           <>
             <div className="menuIcon-container">
               {!toggleMenu ? (
@@ -81,7 +71,6 @@ const Navbar = () => {
                 className="icon header-icons logout-icon"
                 onClick={() => dispatch(authLogout())}
               />
-              {toggleDropDown && dropDownUI}
             </div>
           </>
         )}

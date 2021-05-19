@@ -5,9 +5,7 @@ import {
   listProducts,
   onEditProduct,
 } from "../actions/productActions";
-import AddProductForm from "../components/AddProductForm";
 import { FaTrash, FaEdit, FaShoppingBasket } from "react-icons/fa";
-import { CLEAR_PRODUCT_MESSAGE } from "../constants/productConstants";
 import Toolbar from "../components/Toolbar";
 import EmptyPage from "../components/EmptyPage";
 import Button from "../components/Button";
@@ -18,14 +16,13 @@ import { useHistory } from "react-router-dom";
 
 const ProductScreen = () => {
   const history = useHistory();
-  const [toggleForm, setToggleForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(5);
   const [searchText, setSearchText] = useState("");
 
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.productState);
-  const { loading, products, message } = productState;
+  const { loading, products } = productState;
 
   useEffect(() => {
     dispatch(listProducts());
@@ -45,10 +42,6 @@ const ProductScreen = () => {
   };
   const handleRedirect = (id) => {
     history.push(`/products/${id}`);
-  };
-
-  const clearMessage = () => {
-    dispatch({ type: CLEAR_PRODUCT_MESSAGE });
   };
 
   // filtering products
@@ -101,7 +94,7 @@ const ProductScreen = () => {
   );
 
   return (
-    <Layout message={message} loading={loading} clearMessage={clearMessage}>
+    <Layout loading={loading}>
       {products?.length === 0 ? (
         <EmptyPage>
           <FaShoppingBasket className="empty-icon" />

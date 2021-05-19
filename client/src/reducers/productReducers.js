@@ -30,7 +30,6 @@ const initState = {
   error: null,
   editable: null,
   searchedProduct: null,
-  message: null,
 };
 
 export const productReducer = (state = initState, action) => {
@@ -76,7 +75,6 @@ export const productReducer = (state = initState, action) => {
         ...state,
         loading: false,
         success: true,
-        message: action.payload.message,
         products: [...state.products, action.payload.newProduct],
       };
     case PRODUCT_CREATE_FAIL:
@@ -92,7 +90,6 @@ export const productReducer = (state = initState, action) => {
     case PRODUCT_DELETE_SUCCESS:
       return {
         ...state,
-        message: action.payload.data?.message,
         products: state.products.filter(
           (product) => product._id !== action.payload.productId
         ),
@@ -117,14 +114,12 @@ export const productReducer = (state = initState, action) => {
         loading: true,
       };
     case PRODUCT_EDIT_SUCCESS:
-      console.log(action.payload);
       const { updated } = action.payload;
 
       return {
         ...state,
         loading: false,
         editable: null,
-        message: action.payload.message,
         products: state.products.map((product) =>
           product._id === updated._id ? updated : product
         ),
@@ -172,12 +167,6 @@ export const productReducer = (state = initState, action) => {
         ...state,
         error: null,
       };
-    case CLEAR_PRODUCT_MESSAGE:
-      return {
-        ...state,
-        message: null,
-      };
-
     default:
       return state;
   }

@@ -7,7 +7,7 @@ const LineChart = () => {
   const orderState = useSelector((state) => state.orderState);
   const { orders } = orderState;
 
-  const newOrder = orders.map((obj) => {
+  const newOrder = orders?.map((obj) => {
     if (obj?.orderDate) {
       return { ...obj, orderDate: moment(obj.orderDate).format("MMM Do YY") };
     }
@@ -15,7 +15,7 @@ const LineChart = () => {
   });
 
   const withTotalPrice = Object.values(
-    newOrder.reduce((obj, item) => {
+    newOrder?.reduce((obj, item) => {
       let key = item.orderDate;
       if (!obj[key]) {
         obj[key] = Object.assign(item);
@@ -26,12 +26,12 @@ const LineChart = () => {
     }, {})
   );
 
-  const reversed = withTotalPrice.reverse();
-  const sliced = reversed.slice(0, 7).reverse();
+  const reversed = withTotalPrice?.reverse();
+  const sliced = reversed?.slice(0, 7).reverse();
 
-  const labels = sliced.map((x) => x.orderDate);
+  const labels = sliced?.map((x) => x.orderDate);
 
-  const lineData = sliced.map((x) => x.totalPrice);
+  const lineData = sliced?.map((x) => x.totalPrice);
 
   return (
     <div>

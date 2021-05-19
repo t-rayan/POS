@@ -8,10 +8,8 @@ import {
 } from "../actions/categoryActions";
 import Toolbar from "../components/Toolbar";
 import { FaTrash, FaEdit, FaCartPlus } from "react-icons/fa";
-import AddCategoryForm from "../components/AddCategoryForm";
 import Pagination from "../components/Pagination";
 import { getCurrentValues } from "../utils/getCurrentValues";
-import { CLEAR_CATEGORY_MESSAGE } from "../constants/categoryConstants";
 import Layout from "../components/Layout";
 import EmptyPage from "../components/EmptyPage";
 import Button from "../components/Button";
@@ -20,7 +18,6 @@ const CategoryScreen = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [toggleForm, setToggleForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [categoriesPerPage] = useState(5);
   const [searchText, setSearchText] = useState("");
@@ -46,10 +43,6 @@ const CategoryScreen = (props) => {
   const displayFormHandler = (e) => {
     e.preventDefault();
     history.push("/addCategory");
-  };
-
-  const clearMessage = () => {
-    dispatch({ type: CLEAR_CATEGORY_MESSAGE });
   };
 
   const increaseValue = () => setCurrentPage(currentPage + 1);
@@ -105,7 +98,7 @@ const CategoryScreen = (props) => {
   );
 
   return (
-    <Layout message={message} loading={loading} clearMessage={clearMessage}>
+    <Layout message={message} loading={loading}>
       {categories?.length === 0 ? (
         <EmptyPage>
           <FaCartPlus className="empty-icon" />

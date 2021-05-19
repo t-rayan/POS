@@ -27,7 +27,6 @@ const initState = {
   success: false,
   error: null,
   editable: null,
-  message: null,
 };
 
 export const categoryReducer = (state = initState, action) => {
@@ -65,7 +64,6 @@ export const categoryReducer = (state = initState, action) => {
         editable: null,
         error: null,
         success: true,
-        message: action.payload.message,
         categories: [action.payload.newCategory, ...state.categories],
       };
     case CATEGORY_CREATE_FAIL:
@@ -87,7 +85,6 @@ export const categoryReducer = (state = initState, action) => {
         ...state,
         loading: false,
         success: true,
-        message: action.payload.data?.message,
         categories: state.categories.filter(
           (category) => category._id !== action.payload.categoryId
         ),
@@ -116,7 +113,6 @@ export const categoryReducer = (state = initState, action) => {
         ...state,
         editable: null,
         loading: false,
-        message: action.payload.message,
         categories: state.categories.map((category) =>
           category._id === updatedCategory._id ? updatedCategory : category
         ),
@@ -139,12 +135,6 @@ export const categoryReducer = (state = initState, action) => {
         ...state,
         error: null,
       };
-    case CLEAR_CATEGORY_MESSAGE:
-      return {
-        ...state,
-        message: null,
-      };
-
     case CATEGORY_DETAILS_REQUEST:
       return {
         ...state,

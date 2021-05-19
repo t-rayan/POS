@@ -6,7 +6,7 @@ const DetailsLayout = ({ children, title, handleRedirect, className }) => {
   return (
     <div className="wrapper">
       <div className=" container ">
-        <div className="details-container p-5">
+        <div className="details-container">
           <div className="mb-2">
             <h2 className="page-title">{title}</h2>
           </div>

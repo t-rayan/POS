@@ -21,7 +21,9 @@ import {
   PRODUCT_DECREASE_SUCCESS,
   PRODUCT_DECREASE_FAIL,
 } from "../constants/productConstants";
-import { tokenConfig } from "./authActions";
+import { tokenConfig } from "../utils/authHeader";
+import { apiUrl } from "../utils/config";
+import { SET_MESSAGE } from "../constants/msgConstants";
 
 const header = {
   "Content-Type": "application/json",
@@ -32,7 +34,10 @@ export const listProducts = () => async (dispatch, getState) => {
     type: PRODUCT_LIST_REQUEST,
   });
   try {
-    const { data } = await Axios.get("/api/products", tokenConfig(getState));
+    const { data } = await Axios.get(
+      `${apiUrl}/products`,
+      tokenConfig(getState)
+    );
     dispatch({
       type: PRODUCT_LIST_SUCCESS,
       payload: data,
@@ -51,7 +56,7 @@ export const productDetails = (productId) => async (dispatch, getState) => {
   });
   try {
     const { data } = await Axios.get(
-      `/api/products/${productId}`,
+      `${apiUrl}/products/${productId}`,
       tokenConfig(getState)
     );
     dispatch({
@@ -73,14 +78,20 @@ export const createProduct = (product) => async (dispatch, getState) => {
   });
   try {
     const { data } = await Axios.post(
-      "/api/products",
+      `${apiUrl}/products`,
       product,
       tokenConfig(getState)
     );
-    dispatch({
-      type: PRODUCT_CREATE_SUCCESS,
-      payload: data,
-    });
+    if (data) {
+      dispatch({
+        type: PRODUCT_CREATE_SUCCESS,
+        payload: data,
+      });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: data.message,
+      });
+    }
   } catch (error) {
     dispatch({
       type: PRODUCT_CREATE_FAIL,
@@ -97,13 +108,15 @@ export const deleteProduct = (productId) => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.delete(
-      `api/products/${productId}`,
+      `${apiUrl}/products/${productId}`,
       tokenConfig(getState)
     );
-    dispatch({
-      type: PRODUCT_DELETE_SUCCESS,
-      payload: { productId, data },
-    });
+    if (data) {
+      dispatch({
+        type: SET_MESSAGE,
+        payload: data.message,
+      });
+    }
   } catch (error) {
     dispatch({
       type: PRODUCT_DELETE_FAIL,
@@ -126,7 +139,7 @@ export const editProduct = (product) => async (dispatch, getState) => {
 
   try {
     const { data } = await Axios.put(
-      `api/products/${_id}`,
+      `${apiUrl}/products/${_id}`,
       {
         _id: _id,
         name: name,
@@ -135,13 +148,18 @@ export const editProduct = (product) => async (dispatch, getState) => {
         category: category,
         desc: desc,
       },
-      tokenConfig(getState),
-      header
+      tokenConfig(getState)
     );
-    dispatch({
-      type: PRODUCT_EDIT_SUCCESS,
-      payload: data,
-    });
+    if (data) {
+      dispatch({
+        type: PRODUCT_EDIT_SUCCESS,
+        payload: data,
+      });
+      dispatch({
+        type: SET_MESSAGE,
+        payload: data.message,
+      });
+    }
   } catch (error) {
     dispatch({
       type: PRODUCT_EDIT_FAIL,
@@ -166,7 +184,7 @@ export const decreaseProduct = (products) => async (dispatch, getState) => {
     let updatedStock = stock - qty;
     try {
       const { data } = await Axios.put(
-        `api/products/${_id}`,
+        `${apiUrl}/products/${_id}`,
         {
           _id: _id,
           name: name,
