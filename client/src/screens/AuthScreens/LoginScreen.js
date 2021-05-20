@@ -9,7 +9,6 @@ import { FaTimes } from "react-icons/fa";
 
 const LoginScreen = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const authState = useSelector((state) => state.authState);
   const { error, isLoggedIn, loading } = authState;
 
@@ -73,6 +72,15 @@ const LoginScreen = () => {
       <Button className="btn primary btn-lg" disabled={loading}>
         {loading ? "Loading" : "Login"}
       </Button>
+
+      <div className="row ">
+        <p className="demo-class">
+          Demo email: <span>demo@demo.com</span>{" "}
+        </p>
+        <p className="demo-class">
+          Demo password: <span>12345678</span>{" "}
+        </p>
+      </div>
     </form>
   );
 };

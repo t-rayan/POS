@@ -7,6 +7,13 @@
 @import './styles//mediaQueries.css';
 @import './styles/mobilieMenu.css';
 
+.demo-class {
+  font-size: 1.4rem;
+}
+.demo-class span{
+  color: var(--primary-color)
+}
+
 nav {
   display: grid;
 }
