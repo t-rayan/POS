@@ -1,0 +1,54 @@
+/* icons css */
+.icon {
+  cursor: pointer;
+  padding: 0rem;
+}
+.header-icons {
+  font-size: 1.9rem;
+  color: var(--text-color);
+}
+ .cart-icon {
+  margin-right: 1.5rem !important;
+}
+.header-icons:hover {
+  color: var(--primary-color);
+}
+.trash-icon {
+  font-size: 1.5rem;
+
+  margin-right: .6rem;
+  color: var(--secondary-text);
+}
+.trash-icon:hover {
+  color: var(--soft-red);
+}
+.edit-icon {
+  font-size: 1.7rem;
+  color: var(--secondary-text);
+}
+.edit-icon:hover {
+  color: var(--soft-blue);
+}
+.cart-plus {
+  color: #ddd;
+  font-size: 2.5rem;
+}
+.check-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--secondary-color);
+  animation: addItem .3s ease-in-out;
+}
+.empty-icon {
+  font-size: 5rem;
+}
+
+.header-icons {
+  margin: 0 .5rem;
+}
+.dashboard-icon {
+  color: var(--secondary-color);
+}
+.showPswd-btn {
+  cursor: pointer;
+}

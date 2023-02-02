@@ -1,0 +1,97 @@
+@media (max-width: 640px) {
+ 
+}
+@media (max-width: 768px) {
+  /* media queries for nav bar */
+  .menuIcon-container {
+    display: block !important;
+  }
+ .middle-links, .right-links {
+   display: none !important;
+ }
+
+ /* mobile-menu queries */
+ .mobile-menu {
+   display: block !important;
+   grid-template-columns: 1fr;
+   grid-template-rows: 5rem 1fr;
+   
+ }
+
+ /* queries for home screen */
+ .home-grid {
+   grid-template-columns: 1fr 37rem   !important;
+ }
+ .home-grid .item-selection-screen {
+  padding: 2rem !important;
+}
+.home-grid .product-list {
+ grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+}
+
+/* queries for container */
+.centered-grid {
+  align-items: flex-start;
+}
+.container {
+  width: 95% !important;
+  padding: 1.5rem 2rem !important;
+}
+
+/* queries for forms */
+.form-container {
+  margin: 3rem auto !important;
+}
+
+.pin-screen {
+  align-items: start !important;
+  margin: 4rem auto !important;
+}
+
+/* queries for auth screens */
+.auth-screen {
+  align-items: flex-start !important;
+  margin-top: 5rem !important;
+}
+
+.centered-grid .dashboard {
+  grid-template-columns: 1fr !important;
+}
+.dashboard > div {
+  padding: 3rem 0 !important;
+  /* align-items: center; */
+  /* justify-content: center; */
+  text-align: center;
+}
+.details-container {
+ padding: 2rem !important;
+}
+
+
+
+}
+@media (max-width:1024px) {
+  .centered-grid .container {
+    width: 95% ;
+  }
+ .dashboard {
+   grid-template-columns: 300px 1fr 1fr !important;
+   grid-template-rows: .3fr 1fr  !important;
+ }
+ .settings-container {
+   grid-template-columns: .9fr !important;
+ }
+ .change-password-card .card-body {
+  grid-template-columns: .8fr 1fr !important;
+}
+
+.container {
+  width: 90% !important;
+}
+}
+@media (min-width:768px) {
+  
+ .mobile-menu {
+   display: none;
+ }
+}

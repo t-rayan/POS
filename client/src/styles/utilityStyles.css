@@ -1,0 +1,47 @@
+.p-2 {
+  padding: 0 2rem;
+}
+.p-1 {
+  padding: 0 .8rem;
+}
+
+.py-1 {
+  padding: 1rem 0;
+}
+.p-4 {
+padding: 2rem 4rem;
+}
+.py-2 {
+  padding: 2rem 0;
+}
+.p-5{
+  padding: 5rem;
+}
+.mr-1 {
+  margin-right: .5rem;
+}
+.mr-2 {
+  margin-right: 2rem;
+}
+.mr-3 {
+  margin-right: 3rem;
+}
+.mt-1 {
+  margin-top: 1rem;
+}
+.mt-3 {
+  margin-top: 2.5rem;
+}
+.mt-2 {
+  margin-top: 2rem;
+}
+.mt-5 {
+  margin: 5rem 0;
+}
+.mb-5 {
+  margin-bottom: 5rem;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+  font-size: 1.5rem;
+}

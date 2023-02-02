@@ -1,0 +1,95 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+html {
+  font-size: 62.5%; 
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  height: 100vh;
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-color);
+}
+#root {
+  height: 100%;
+}
+/* common */
+ 
+hr {
+  border: none;
+  border-bottom: 1px solid rgb(192, 192, 192);
+  padding: 0 0 1px 0;
+}
+a {
+  text-decoration: none;
+ }
+ ul {
+   list-style-type: none;
+   padding: 0 !important;
+ }
+ button {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* grid layouts */
+.grid-layout {
+  display: grid;
+  grid-template-columns: 43% 1fr;
+  justify-content: space-between;
+  gap: 20px;
+}
+.centered-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: center;
+}
+
+/* flex layouts */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+.row.start {
+  justify-content: flex-start;
+  align-items: start;
+}
+.row.center {
+  justify-content: center;
+  align-items: center;
+}
+.row.end {
+  align-items: flex-end;
+}
+.row.center-column {
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+.row.column-start {
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.row.align-center {
+  justify-content: flex-start !important;
+  align-items: center;
+}
+
+
+/* error message css */
+.error-msg {
+  font-size: 1.35rem;
+  color: var(--dark-red)
+}
+
+.auth-link {
+  color: var(--secondary-color);
+  cursor: pointer;
+}
